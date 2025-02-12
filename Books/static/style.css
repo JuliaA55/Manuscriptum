@@ -1,13 +1,34 @@
-.container{
-    width: 100%;
+.book-card {
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.booksDiv{
-    width: 100%;
+.book-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
-.bookCard{
-    display: flex;
+.book-image {
     height: 300px;
-    margin-bottom: 5px;
+    object-fit: cover;
+    border-bottom: 1px solid #dee2e6;
+}
+
+
+.card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #343a40;
+}
+
+.card-author,
+.card-genre {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+.text-center {
+    margin-top: 2rem;
+    color: #495057;
 }
