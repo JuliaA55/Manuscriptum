@@ -1,0 +1,13 @@
+.container{
+    width: 100%;
+}
+
+.booksDiv{
+    width: 100%;
+}
+
+.bookCard{
+    display: flex;
+    height: 300px;
+    margin-bottom: 5px;
+}
