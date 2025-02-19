@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 import os
 from django.core.paginator import Paginator
 from django.http import FileResponse, Http404
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def book_list(request):
@@ -80,3 +81,22 @@ def user_logout(request):
     """Обробка виходу користувача"""
     logout(request)
     return redirect("book_list") 
+
+
+@login_required
+def favorite_books(request):
+    liked_books = request.user.liked_books.all()
+    return render(request, 'books/favorite_books.html', {'books': liked_books})
+
+
+@login_required
+def like_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+
+    if request.user in book.likes.all():
+        book.likes.remove(request.user)
+    else:
+        book.likes.add(request.user)
+
+
+    return redirect("book_list")

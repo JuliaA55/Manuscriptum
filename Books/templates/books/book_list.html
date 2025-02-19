@@ -15,7 +15,11 @@
             <input type="text" name="search" class="form-control me-2" style="width: 900px; margin-left: 10%; margin-top: 2%;" placeholder="Пошук книги за назвою" value="{{ request.GET.search|default:'' }}">
             <button type="submit" class="btn btn-dark" style="margin-top: 2%;">Пошук</button>
         </form>
-
+        {% if user.is_authenticated %}
+        <div style="margin-left: 92%;">
+            <a href="{% url 'favorite_books' %}" class="btn btn-dark me-2">Мої улюблені</a>
+        </div>
+    {% endif %}
         <!-- Список книг -->
         
         <div class="container mt-4">
@@ -38,6 +42,12 @@
                             </h5>
                             <p class="card-author text-muted">{{book.author}}</p>
                             <p class="card-genre text-muted">{{book.genre}}</p>
+                            {% if user.is_authenticated %}
+                            <a href="{% url 'like_book' book.id %}" class="btn
+                                {% if book in liked_books %} btn-success {% else %} btn-outline-success {% endif %}">
+                                {% if book in liked_books %} Лайкнуто {% else %} Лайкнути {% endif %}
+                            </a>
+                        {% endif %}
                         </div>
                     </div>
                 </div>

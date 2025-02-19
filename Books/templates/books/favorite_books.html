@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Mої улюблені книги</h2>
+
+    <div class="row">
+        {% for book in books %}
+        <div class="col-md-4 mb-4">
+            <div class="card book-card">
+                {% if book.photo %}
+                    <img src="{{ book.photo.url }}" alt="Book cover" class="card-img-top book-image">
+                {% else %}
+                    <img src="https://m.media-amazon.com/images/I/719uMEB4kiL._AC_UF1000,1000_QL80_.jpg"
+                        class="card-img-top book-image" alt="Default cover">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ book.title }}</h5>
+                    <p class="card-author text-muted">{{ book.author }}</p>
+                    <p class="card-genre text-muted">{{ book.genre }}</p>
+
+                    <a href="{% url 'like_book' book.id %}" class="btn btn-danger">Прибрати з улюблених</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <h3 class="text-center">У вас ще немає улюблених книг</h3>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
