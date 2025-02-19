@@ -15,11 +15,13 @@
             <input type="text" name="search" class="form-control me-2" style="width: 900px; margin-left: 10%; margin-top: 2%;" placeholder="Пошук книги за назвою" value="{{ request.GET.search|default:'' }}">
             <button type="submit" class="btn btn-dark" style="margin-top: 2%;">Пошук</button>
         </form>
+        
         {% if user.is_authenticated %}
-        <div style="margin-left: 92%;">
+        <div style="margin-left: 92%; margin-top: -5%;">
             <a href="{% url 'favorite_books' %}" class="btn btn-dark me-2">Мої улюблені</a>
         </div>
-    {% endif %}
+        {% endif %}
+    
         <!-- Список книг -->
         
         <div class="container mt-4">

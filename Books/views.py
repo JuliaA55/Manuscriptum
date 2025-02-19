@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Book
+from .models import Book, Category
 from .forms import LoginForm, RegisterForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -12,11 +12,15 @@ from django.contrib.auth.decorators import login_required
 def book_list(request):
     books = Book.objects.all()
     search_query = request.GET.get('search')
+    category_id = request.GET.get('category_id')
+    categories = Category.objects.all()
 
     if search_query:
         books = books.filter(title__istartswith=search_query) | books.filter(title__icontains=search_query)
+    if category_id:
+        books = Book.objects.filter(category_id=category_id)
 
-    return render(request, 'books/book_list.html', {'books': books})
+    return render(request, 'books/book_list.html', {'books': books, "categories":categories})
 
 def book_detail(request,id):
     book = get_object_or_404(Book, id=id)
@@ -100,3 +104,7 @@ def like_book(request, book_id):
 
 
     return redirect("book_list")
+
+def category_book(request):
+    categories = Category.objects.all()
+    return render(request, 'base.html', {'categories': categories})
