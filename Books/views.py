@@ -1,8 +1,11 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Book
 from .forms import LoginForm, RegisterForm
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+import os
+from django.core.paginator import Paginator
+from django.http import FileResponse, Http404
 
 # Create your views here.
 def book_list(request):
@@ -14,7 +17,38 @@ def book_list(request):
 
     return render(request, 'books/book_list.html', {'books': books})
 
+def book_detail(request,id):
+    book = get_object_or_404(Book, id=id)
 
+    return render(request, 'books/book_detail.html', {'book': book})
+
+TEXT_FILES_DIR = "media/files/" 
+
+def read_book(request, book_id):
+    """ Відображає сторінку для читання книги """
+    book = get_object_or_404(Book, id=book_id)
+    file_path = book.text.path
+
+    if not os.path.exists(file_path):
+        return render(request, "404.html", status=404)
+
+    with open(file_path, "r", encoding="utf-8") as file:
+        text = file.read().split("\n") 
+
+    paginator = Paginator(text, 25)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "books/read_book.html", {
+        "book": book,
+        "page_obj": page_obj
+    })
+
+def download_book(request, book_id):
+    book = get_object_or_404(Book, id=book_id)
+    if not book.text:
+        raise Http404("Файл книги не знайдено.")
+    return FileResponse(book.text.open('rb'), as_attachment=True, filename=book.text.name.split('/')[-1])
 
 def user_login(request):
     """Обробка входу користувача"""
@@ -40,3 +74,9 @@ def user_register(request):
         login(request, user)  
         return redirect("book_list")
     return render(request, "books/auth.html", {"form": form, "page": "register"})
+
+
+def user_logout(request):
+    """Обробка виходу користувача"""
+    logout(request)
+    return redirect("book_list") 

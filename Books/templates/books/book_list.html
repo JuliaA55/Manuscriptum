@@ -31,7 +31,11 @@
                             class="card-img-top book-image" alt="Default cover">
                         {% endif %}
                         <div class="card-body">
-                            <h5 class="card-title">{{book.title}}</h5>
+                            <h5 class="card-title">
+                                <a href="{% url 'book_detail' book.id %}" style="text-decoration: none; color: black;">
+                                    {{book.title}}
+                                </a>
+                            </h5>
                             <p class="card-author text-muted">{{book.author}}</p>
                             <p class="card-genre text-muted">{{book.genre}}</p>
                         </div>
