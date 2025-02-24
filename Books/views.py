@@ -108,3 +108,32 @@ def like_book(request, book_id):
 def category_book(request):
     categories = Category.objects.all()
     return render(request, 'base.html', {'categories': categories})
+
+def authors(request):
+    authors_data = [
+        {
+            'name': 'Денис',
+            'role': 'Developer',
+            'description': 'Опис автора 1',
+            'image': '/media/images/dev.png'
+        },
+        {
+            'name': 'Юлія',
+            'role': 'Developer/TeamLead ',
+            'description': 'Опис автора 2',
+            'image': '/media/images/dev.png'
+        },
+        {
+            'name': 'Ілля',
+            'role': 'Developer',
+            'description': 'Опис автора 3',
+            'image': '/media/images/dev.png'
+        },
+        {
+            'name': 'Владислав',
+            'role': 'Developer',
+            'description': 'Опис автора 4',
+            'image': '/media/images/dev.png'
+        }
+    ]
+    return render(request, 'books/authors.html', {'authors': authors_data})

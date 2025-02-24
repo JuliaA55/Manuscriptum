@@ -11,4 +11,5 @@ urlpatterns = [
     path("books/<int:book_id>/download/", views.download_book, name="download_book"),
     path('like/<int:book_id>/', views.like_book, name='like_book'),
     path('favorites/', views.favorite_books, name='favorite_books'),
+    path('authors/', views.authors, name='authors'),
 ]
