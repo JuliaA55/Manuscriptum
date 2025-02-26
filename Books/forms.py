@@ -1,14 +1,4 @@
 from django import forms
-from .models import Comment
-
-
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['text']
-        widgets = {
-            'text': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Залиште коментар...'})
-        }
 
 class LoginForm(forms.Form):
     username = forms.CharField(
@@ -45,4 +35,3 @@ class RegisterForm(forms.Form):
         if password and password2 and password != password2:
             raise forms.ValidationError("Паролі не співпадають!")
         return cleaned_data
-    

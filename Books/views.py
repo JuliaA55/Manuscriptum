@@ -7,9 +7,6 @@ import os
 from django.core.paginator import Paginator
 from django.http import FileResponse, Http404
 from django.contrib.auth.decorators import login_required
-from .models import Book, Comment
-from .forms import CommentForm
-
 
 # Create your views here.
 def book_list(request):
@@ -25,21 +22,10 @@ def book_list(request):
 
     return render(request, 'books/book_list.html', {'books': books, "categories":categories})
 
-def book_detail(request, id):
+def book_detail(request,id):
     book = get_object_or_404(Book, id=id)
-    comments = book.comments.all()
-    form = CommentForm()
 
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            comment = form.save(commit=False)
-            comment.user = request.user
-            comment.book = book
-            comment.save()
-            return redirect('book_detail', id=book.id)
-
-    return render(request, 'books/book_detail.html', {'book': book, 'form': form, 'comments': comments})
+    return render(request, 'books/book_detail.html', {'book': book})
 
 TEXT_FILES_DIR = "media/files/" 
 

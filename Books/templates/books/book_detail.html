@@ -1,46 +1,39 @@
 {% extends 'base.html' %}
-{% block content %}
-<div class="container" style="width: 80%; margin-top: 20px;">
-  <div class="detailsDiv" style="border-radius: 5px; width: 80%; margin-left: 10%;">
-    <img src="{{ book.photo.url }}" alt="..." width="400px" height="500px">
-    <div class="details" style="margin-left: 420px; margin-top: -38%; width: 70%;">
-      <h4>{{ book.title }}</h4>
-      <h5>
-        <a style="color: #6c757d;" href="{% url 'author_detail' book.authorId.id %}">{{ book.author }}</a>
-      </h5>
-      <hr style="width: 800px; margin-left: 10px;">
-      <p><strong>Кількість сторінок:</strong> {{ book.numberOfPages }}</p>
-      <p><strong>Жанр:</strong> {{ book.genre }}</p>
-      <p>{{ book.description }}</p>
-      <button class="btn btn-dark">
-        <a href="{% url 'read_book' book.id %}" style="color: white; text-decoration: none;">Читати</a>
-      </button>
-      <button class="btn btn-outline-dark">
-        <a href="{% url 'download_book' book.id %}" style="color: black; text-decoration: none;">Завантажити</a>
-      </button>
+  {% block content %}
+  <div class="containerDiv" style="width: 80%; margin-left: 10%; margin-top: 1%;">
+    
+    <div class="detailsDiv" style="border-radius: 5px; width: 80%; height: 700px;margin-left: 10%;">
+      <img src="{{book.photo.url}}" alt="..." width="400px" height="500px">
+        <div class="details" style="margin-left: 420px; margin-top: -38%; width: 70%;">
+          <h4>{{book.title}}</h4>
+          <h5 >
+            <a style="color: #6c757d;" href="{% url 'author_detail' book.authorId.id %}">{{ book.author }}</a>
+          </h5>
+          <hr style="width: 800px; margin-left: 10px;">
+          <p class="detailP" style="font-weight: bolder; font-size: 18px;">Кількість сторінок</p>
+            <div class="detailDivs" style="width: 70px; background-color: rgb(241, 239, 239); text-align: center; border-radius: 5px;">
+              {{book.numberOfPages}}
+            </div>
+          <br>
+          <p class="detailP" style="font-weight: bolder; font-size: 18px;">Жанр</p>
+            <div class="detailDivs" style="width: 300px; background-color: rgb(241, 239, 239); text-align: center; border-radius: 5px;">
+              {{book.genre}}
+            </div>
+          <br>
+          <p>{{book.description}}</p>
+          <br>
+          <button class="btn btn-dark me-2">
+            <a href="{% url 'read_book' book.id %}" style="color: white; text-decoration: none;">Читати</a>
+          </button>
+          <button class="btn btn-outline-dark">
+            <a href="{% url 'download_book' book.id %}" style="color: black; text-decoration: none;"> Завантажити</a>
+          </button>
+        </div>
+        
     </div>
+    
   </div>
 
-  <hr>
-  <h3>{{ book.comments.count }} коментарів</h3>
 
-  {% if user.is_authenticated %}
-  <form method="post" style="margin-bottom: 20px;">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary" style="background-color: black;">Додати коментар</button>
-  </form>
-  {% else %}
-  <p>Щоб залишити коментар, <a href="{% url 'login' %}">увійдіть у систему</a>.</p>
-  {% endif %}
-
-  {% for comment in book.comments.all %}
-  <div class="card mb-2">
-    <div class="card-body">
-      <p><strong>{{ comment.user.username }}</strong> ({{ comment.created_at|date:"d.m.Y H:i:s" }})</p>
-      <p>{{ comment.text }}</p>
-    </div>
-  </div>
-  {% endfor %}
-</div>
 {% endblock %}
+    
