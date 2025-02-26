@@ -12,4 +12,5 @@ urlpatterns = [
     path('like/<int:book_id>/', views.like_book, name='like_book'),
     path('favorites/', views.favorite_books, name='favorite_books'),
     path('authors/', views.authors, name='authors'),
+    path('author/<int:author_id>/', views.author_detail, name='author_detail'),
 ]

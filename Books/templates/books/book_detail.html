@@ -6,7 +6,9 @@
       <img src="{{book.photo.url}}" alt="..." width="400px" height="500px">
         <div class="details" style="margin-left: 420px; margin-top: -38%; width: 70%;">
           <h4>{{book.title}}</h4>
-          <h5 style="color: #6c757d;">{{book.author}}</h5>
+          <h5 >
+            <a style="color: #6c757d;" href="{% url 'author_detail' book.authorId.id %}">{{ book.author }}</a>
+          </h5>
           <hr style="width: 800px; margin-left: 10px;">
           <p class="detailP" style="font-weight: bolder; font-size: 18px;">Кількість сторінок</p>
             <div class="detailDivs" style="width: 70px; background-color: rgb(241, 239, 239); text-align: center; border-radius: 5px;">

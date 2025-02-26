@@ -8,6 +8,17 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+
+
+class Author(models.Model):
+    name = models.CharField(max_length=200)
+    biography = models.TextField(max_length=500)
+    photo = models.ImageField(upload_to='images/', blank=True, null=True)
+
+    def __str__(self):
+        return self.name
+
+
 # Create your models here.
 class Book(models.Model):
     title = models.CharField(max_length=200)
@@ -20,6 +31,7 @@ class Book(models.Model):
     text = models.FileField(upload_to='files/', blank=True, null=True)
     likes = models.ManyToManyField(User, related_name="liked_books", blank=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE,null=True, related_name='books')
+    authorId = models.ForeignKey(Author, on_delete=models.CASCADE, null=True, related_name='books')
 
 
     def __str__(self):

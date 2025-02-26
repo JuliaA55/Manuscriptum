@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+  {% block content %}
+  <div class="containerDiv" style="width: 80%; margin-left: 10%; margin-top: 4%;">
+    
+    <div class="detailsDiv" style="border-radius: 5px; width: 80%; height: 700px;margin-left: 10%;">
+      <img src="{{author.photo.url}}" alt="..." width="400px" height="400px" style="margin-top: -1%;">
+        <div class="details" style="margin-left: 420px; margin-top: -32%; width: 70%;">
+          <h4>{{author.name}}</h4>
+          <h5 style="color: #6c757d;">{{book.author}}</h5>
+          <hr style="width: 800px; margin-left: 10px;">
+          <p>{{author.biography}}</p>
+          <br>
+          <button class="btn btn-dark me-2" style="margin-top: -3%;">Стати спонсором</button>
+        </div>
+    </div>
+    <h2 style="margin-left: 10%; margin-top: -18%;">📖 Книги автора:</h2>
+    <div style="width: 80%; margin-left: 10%; display: flex; gap: 20px;">
+    {% for book in books %}
+        <div style="width: 200px;">
+            <img src="{{ book.photo.url }}" alt="..." width="200px" height="200px" style="margin-right: 20px;">
+            <h4> {{ book.title }}</h4>
+        </div>
+    {% empty %}
+        <div>У цього автора поки що немає книг.</div>
+    {% endfor %}
+    <div>
+  </div>
+
+{% endblock %}

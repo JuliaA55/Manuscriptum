@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Book, Category
+from .models import Book, Category,Author
 from .forms import LoginForm, RegisterForm
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
@@ -137,3 +137,9 @@ def authors(request):
         }
     ]
     return render(request, 'books/authors.html', {'authors': authors_data})
+
+
+def author_detail(request, author_id):
+    author = get_object_or_404(Author, id=author_id)
+    books = author.books.all()
+    return render(request, 'books/author_detail.html', {'author': author, 'books': books})
